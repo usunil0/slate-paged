@@ -1,0 +1,11 @@
+// font
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+//node modules
+@import '../../../node_modules/react-grid-layout/css/styles.css';
+@import '../../../node_modules/react-resizable/css/styles.css';
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+
+// custom scss
+@import './tab-group-col';
+@import './custom';
