@@ -5,7 +5,7 @@ A try to make slate js paged.
 slate:
 https://github.com/ianstormtaylor/slate
 
-after `yarn dev` visit http://localhost:3000/notes for notes
+after `yarn dev` visit http://localhost:3000 for notes
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
