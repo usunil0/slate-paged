@@ -1,5 +1,6 @@
-import styles from '../styles/Home.module.css'
 import Notes from '../notes'
+
+import styles from '../styles/Home.module.css'
 
 export default function Home() {
   return (
