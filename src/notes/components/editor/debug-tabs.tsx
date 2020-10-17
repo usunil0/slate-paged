@@ -1,5 +1,4 @@
 import React from 'react'
-import { Tabs, Tab, Nav } from 'react-bootstrap'
 import { Editor } from 'slate'
 import { useSlate } from 'slate-react'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button } from 'react-bootstrap'
+import { Button } from 'theme-ui'
 import { useSlate } from 'slate-react'
 
 import toggleBlock, { isBlockActive } from '../utils/toggle-block'

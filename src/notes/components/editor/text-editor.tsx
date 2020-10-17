@@ -12,7 +12,6 @@ import {
 
 import { BalloonToolbar, ToolbarMark } from 'slate-plugins-next' // TODO ; plan to remove this dependency and use own balloon toolbar
 
-import DebugTabs from './debug-tabs'
 import Toolbar from './toolbar'
 
 import defaultSelection from './utils/default-selection'
@@ -25,7 +24,6 @@ import toggleMark from './utils/toggle-mark'
 import toolbarMarks, { IToolbarMark } from './constants/mark-list'
 import intialState from './constants/initial-state'
 import highlightColors from './constants/highlight-colors'
-import { Col, Row } from 'react-bootstrap'
 import withCustomNormalize from './utils/with-custom-normalize'
 import WithCustomInsertBreak from './utils/custom-insert-break'
 import WithCustomDelete from './utils/custom-delete'
@@ -115,8 +113,8 @@ function TextEditor() {
               )
             })}
           </BalloonToolbar>
-          <Row>
-            <Col md="6">
+          <div className="row">
+            <div className="col-md-12">
               <Toolbar
                 setSearch={(value: string) =>
                   setState({ ...state, search: value })
@@ -133,14 +131,14 @@ function TextEditor() {
                   setState({ ...state, lastBlurSelection: editor.selection })
                 }
               />
-            </Col>
-            <Col md="6">
-              <DebugTabs />
-            </Col>
-          </Row>
+            </div>
+            {/* <div className="col-md-6">
+               <DebugTabs />
+            </div> */}
+          </div>
         </Slate>
     
-   </div>>
+   </div>
   
   )
 }

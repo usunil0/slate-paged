@@ -13,7 +13,7 @@ import {
   getPreviousClosestRange
 } from '../utils/get-closest-range'
 import defaultSelection from '../utils/default-selection'
-import { Button } from 'react-bootstrap'
+import { Button } from 'theme-ui'
 import { getEditorTextRanges } from '../utils/get-text-ranges'
 
 interface ToolbarProps {
@@ -145,7 +145,7 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
       })}
       {blocks.map((block: ToolbarBlockProps) => {
         if (block.isHiddenInToolbar) return
-        return <BlockButton key={mark} type={block.type} icon={block.icon} />
+        return <BlockButton key={block.type} type={block.type} icon={block.icon} />
       })}
       <div className="d-inline-flex border">
         <SearchOutlined className="p-2 align-self-center" />

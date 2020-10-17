@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react'
 
-import { Button } from 'react-bootstrap'
+import { Button } from 'theme-ui'
 import { useSlate } from 'slate-react'
 
 import toggleMark, { isMarkActive } from '../utils/toggle-mark'
@@ -16,8 +16,7 @@ const MarkButton = ({ type, icon }: MarkButtonProps)=> {
   return (
     <Button
       className={`d-inline m-1`}
-      type={isMarkActive(editor, type) ? 'primary' : 'default'}
-      onMouseDown={(event:any) => {
+     onMouseDown={(event:any) => {
         event.preventDefault()
         toggleMark(editor, type)
       }}>
