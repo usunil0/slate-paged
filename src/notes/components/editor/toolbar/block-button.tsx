@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Button } from 'antd'
+import { Button } from 'theme-ui'
 import { useSlate } from 'slate-react'
 
 import toggleBlock, { isBlockActive } from '../utils/toggle-block'
@@ -15,9 +15,8 @@ const BlockButton = ({ type, icon }: BlockButtonProps) => {
 
   return (
     <Button
-      className={`d-inline m-1`}
-      type={isBlockActive(editor, type) ? 'primary' : 'default'}
-      onMouseDown={event => {
+      className={`d-inline m-1 ${isBlockActive(editor, type) ? 'primary' : 'default'}`}
+      onMouseDown={(event:any) => {
         event.preventDefault()
         toggleBlock(editor, type)
       }}>

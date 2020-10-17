@@ -12,7 +12,6 @@ import {
 
 import { BalloonToolbar, ToolbarMark } from 'slate-plugins-next' // TODO ; plan to remove this dependency and use own balloon toolbar
 
-import DebugTabs from './debug-tabs'
 import Toolbar from './toolbar'
 
 import defaultSelection from './utils/default-selection'
@@ -25,24 +24,29 @@ import toggleMark from './utils/toggle-mark'
 import toolbarMarks, { IToolbarMark } from './constants/mark-list'
 import intialState from './constants/initial-state'
 import highlightColors from './constants/highlight-colors'
-import { Col, Layout, Row } from 'antd'
 import withCustomNormalize from './utils/with-custom-normalize'
 import WithCustomInsertBreak from './utils/custom-insert-break'
 import WithCustomDelete from './utils/custom-delete'
 
-interface TextEditorState{
-  value:Node[]
-  search:string | undefined
-  lastBlurSelection:Range | null
+interface TextEditorState {
+  value: Node[]
+  search: string | undefined
+  lastBlurSelection: Range | null
 }
 
 function TextEditor() {
-  const editor = useMemo(() => WithCustomDelete(WithCustomInsertBreak(withCustomNormalize(withReact(createEditor())))), [])
+  const editor = useMemo(
+    () =>
+      WithCustomDelete(
+        WithCustomInsertBreak(withCustomNormalize(withReact(createEditor())))
+      ),
+    []
+  )
 
-  const [state,setState]=useState<TextEditorState>({
-    value:[...intialState],
-    search:'',
-    lastBlurSelection:defaultSelection
+  const [state, setState] = useState<TextEditorState>({
+    value: [...intialState],
+    search: '',
+    lastBlurSelection: defaultSelection
   })
 
   const handleDecorate = ([node, path]: NodeEntry<Node>) => {
@@ -88,50 +92,54 @@ function TextEditor() {
   useEffect(() => {
     ReactEditor.focus(editor)
   }, [])
-  
+
   return (
-    <Layout >
-      <Layout.Content>
-      <Slate editor={editor} value={state.value} onChange={value => setState({...state,value})}>
-        <BalloonToolbar>
-          {toolbarMarks.map((mark: IToolbarMark) => {
-            return (
-              <ToolbarMark
-                type={mark.type}
-                icon={mark.icon}
-                onMouseDown={e => {
-                  e.preventDefault()
-                  toggleMark(editor, mark.type)
-                }}
+   <div>
+       <Slate
+          editor={editor}
+          value={state.value}
+          onChange={value => setState({ ...state, value })}>
+          <BalloonToolbar>
+            {toolbarMarks.map((mark: IToolbarMark) => {
+              return (
+                <ToolbarMark
+                  type={mark.type}
+                  icon={mark.icon}
+                  onMouseDown={e => {
+                    e.preventDefault()
+                    toggleMark(editor, mark.type)
+                  }}
+                />
+              )
+            })}
+          </BalloonToolbar>
+          <div className="row">
+            <div className="col-md-12">
+              <Toolbar
+                setSearch={(value: string) =>
+                  setState({ ...state, search: value })
+                }
+                search={state.search || ''}
+                lastBlurSelection={state.lastBlurSelection}
               />
-            )
-          })}
-        </BalloonToolbar>
-        <Row>
-          <Col span="12">
-            <Toolbar
-              setSearch={(value:string) => setState({...state,search:value})}
-              search={state.search || ''}
-              lastBlurSelection={state.lastBlurSelection}
-            />
-            <Editable
-              decorate={decorate}
-              onKeyDown={(event: any) => onKeyDownCustom(editor, event)}
-              renderElement={renderElement}
-              renderLeaf={handleRenderLeaf}
-              onBlur={() => setState({...state,lastBlurSelection:editor.selection})}
-            />
-          </Col>
-          <Col span="12">
-            <DebugTabs />
-          </Col>
-       
-          
-        </Row>
-      </Slate>
- 
-      </Layout.Content>
-   </Layout>
+              <Editable
+                decorate={decorate}
+                onKeyDown={(event: any) => onKeyDownCustom(editor, event)}
+                renderElement={renderElement}
+                renderLeaf={handleRenderLeaf}
+                onBlur={() =>
+                  setState({ ...state, lastBlurSelection: editor.selection })
+                }
+              />
+            </div>
+            {/* <div className="col-md-6">
+               <DebugTabs />
+            </div> */}
+          </div>
+        </Slate>
+    
+   </div>
+  
   )
 }
 

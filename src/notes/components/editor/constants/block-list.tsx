@@ -14,7 +14,7 @@ export interface ToolbarBlockProps {
 }
 
 export const LIST_TYPES = ['numbered-list', 'bulleted-list']
-export const HEADING_TYPES = ['h1', 'h2','h3']
+export const HEADING_TYPES = ['h1', 'h2', 'h3']
 
 const blocks: ToolbarBlockProps[] = [
   {

@@ -6,14 +6,14 @@ import MarkButton from './mark-button'
 import BlockButton from './block-button'
 import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons'
 import { ReactEditor, useSlate } from 'slate-react'
-import { Range, Transforms} from 'slate'
+import { Range, Transforms } from 'slate'
 import indexOf from '../utils/index-of-range'
 import {
   getNextClosestRange,
   getPreviousClosestRange
 } from '../utils/get-closest-range'
 import defaultSelection from '../utils/default-selection'
-import { Button } from 'antd'
+import { Button } from 'theme-ui'
 import { getEditorTextRanges } from '../utils/get-text-ranges'
 
 interface ToolbarProps {
@@ -31,7 +31,7 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
   useEffect(() => {
     if (search) {
       const textRanges = getEditorTextRanges(editor, search)
-     
+
       if (textRanges) {
         setRanges(textRanges)
       } else {
@@ -128,7 +128,6 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
         setisNextActive(false)
       }
     }
-
   }, [search, Ranges, editor.selection])
 
   useEffect(() => {
@@ -146,7 +145,7 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
       })}
       {blocks.map((block: ToolbarBlockProps) => {
         if (block.isHiddenInToolbar) return
-        return <BlockButton type={block.type} icon={block.icon} />
+        return <BlockButton key={block.type} type={block.type} icon={block.icon} />
       })}
       <div className="d-inline-flex border">
         <SearchOutlined className="p-2 align-self-center" />

@@ -1,4 +1,4 @@
-***work in progress***
+**_work in progress_**
 
 A try to make slate js paged.
 

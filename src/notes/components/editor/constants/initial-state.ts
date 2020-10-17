@@ -12,7 +12,7 @@ const nodes = [
     type: 'paragraph',
     children: [
       {
-        text: 'mpression, group-awareness, '
+        text: 'mpression,  group-awareness, '
       }
     ]
   },
