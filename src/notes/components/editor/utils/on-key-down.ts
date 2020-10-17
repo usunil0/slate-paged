@@ -1,11 +1,11 @@
 import { ReactEditor } from 'slate-react'
-import { Editor, Transforms,Text,Range, Point, Path } from 'slate'
+import { Editor, Transforms, Text, Range, Point, Path } from 'slate'
 
 import { isKeyHotkey } from 'is-hotkey'
 
 import toggleMark from './toggle-mark'
 
-const HOTKEYS:{[key:string]:string | string[]} = {
+const HOTKEYS: { [key: string]: string | string[] } = {
   bold: 'mod+b',
   compose: ['down', 'left', 'right', 'up', 'backspace', 'enter'],
   moveBackward: 'left',
@@ -19,7 +19,7 @@ const HOTKEYS:{[key:string]:string | string[]} = {
   italic: 'mod+i',
   splitBlock: 'shift?+enter',
   undo: 'mod+z',
-  selectAll: 'mod+a',
+  selectAll: 'mod+a'
 }
 
 const create = (key: string) => {
@@ -32,49 +32,46 @@ const create = (key: string) => {
   }
 }
 
-const isHotKey={
+const isHotKey = {
   isBold: create('bold'),
   isSplitBlock: create('splitBlock'),
-  isSelectAll:create('selectAll')
+  isSelectAll: create('selectAll')
 }
-
 
 //still very much to do here.
 const onKeyDown = (editor: ReactEditor, event: KeyboardEvent) => {
   //TODO use isHotKey here
-  if(isHotKey.isSelectAll(event)){
-   event.preventDefault()
-    const [match] =  Editor.nodes(editor,{
-        match:n=> Text.isText(n)
+  if (isHotKey.isSelectAll(event)) {
+    event.preventDefault()
+    const [match] = Editor.nodes(editor, {
+      match: n => Text.isText(n)
     })
-    
-    if(!!match){
 
+    if (!!match) {
       const anchor = Editor.start(editor, match[1])
-      const focus = Editor.end(editor, match[1] )
+      const focus = Editor.end(editor, match[1])
       const currentSelectedRange = { anchor, focus }
 
-      if(editor.selection==null){
-        Transforms.select(editor,currentSelectedRange)
+      if (editor.selection == null) {
+        Transforms.select(editor, currentSelectedRange)
         return
       }
-    
-      if(Range.equals(editor.selection,currentSelectedRange)){
 
+      if (Range.equals(editor.selection, currentSelectedRange)) {
         const EditorStartAnchor = Editor.start(editor, [])
-        const EditorEndAnchor = Editor.end(editor,[])
-        const EditorRange = { anchor:EditorStartAnchor, focus:EditorEndAnchor } 
+        const EditorEndAnchor = Editor.end(editor, [])
+        const EditorRange = {
+          anchor: EditorStartAnchor,
+          focus: EditorEndAnchor
+        }
 
-        Transforms.select(editor,EditorRange)
-        
+        Transforms.select(editor, EditorRange)
+
         return
-      }else{
-        Transforms.select(editor,currentSelectedRange)
+      } else {
+        Transforms.select(editor, currentSelectedRange)
         return
       }
-      
-        
-      
     }
   }
   switch (event.key) {
