@@ -7,6 +7,17 @@ https://github.com/ianstormtaylor/slate
 
 after `yarn dev` visit http://localhost:3000 for notes
 
+
+work done:
+basic editor setup
+basic functionalities
+
+todo:
+figure out the nodes length and paging
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
