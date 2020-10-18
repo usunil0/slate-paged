@@ -12,7 +12,6 @@ const TextEditor = dynamic(
 const Notes = () => {
   return (
     <div>
-      Notes
       <TextEditor />
     </div>
   )

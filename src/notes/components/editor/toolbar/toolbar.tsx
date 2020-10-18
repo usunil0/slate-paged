@@ -2,9 +2,9 @@
 import { jsx } from 'theme-ui'
 
 import React, { useEffect, useState } from 'react'
-
+import {saveAs} from 'file-saver'
 import { Button, Flex, Box } from 'theme-ui'
-import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons'
+import { DownOutlined, FileWordOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons'
 import { ReactEditor, useSlate } from 'slate-react'
 import { Range, Transforms } from 'slate'
 
@@ -19,6 +19,7 @@ import {
 } from '../utils/get-closest-range'
 import defaultSelection from '../utils/default-selection'
 import { getEditorTextRanges } from '../utils/get-text-ranges'
+import convertToDoc from '../utils/convert-to-doc'
 
 interface ToolbarProps {
   search: string
@@ -30,7 +31,6 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
   const [Ranges, setRanges] = useState<Range[]>([])
   const [isPreviousActive, setIsPreviousActive] = useState<boolean>(false)
   const [isNextActive, setisNextActive] = useState<boolean>(false)
-  const [isSaveActive, setSaveActive] = useState<boolean>(false)
 
   useEffect(() => {
     if (search) {
@@ -134,16 +134,20 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
     }
   }, [search, Ranges, editor.selection])
 
-  useEffect(() => {
-    const textRanges = getEditorTextRanges(editor, '___')
-    if (textRanges.length > 0) {
-      setSaveActive(false)
-    } else {
-      setSaveActive(true)
-    }
-  }, [editor.selection, editor.children])
+  const downloadAsDoc =async ()=>{
+  const doc=await convertToDoc(editor)
+   saveAs(doc,"YO THIS IS YOUR FILE.docx")
+  }
+
   return (
-    <Flex>
+    <Flex sx={{
+      width:'100%',
+      position:'sticky',
+      top:0,
+      zIndex:10,
+      bg:'primary'
+    }}>
+      <Box>
       {toolbarMarks.map((mark: IToolbarMark) => {
         return <MarkButton type={mark.type} icon={mark.icon} />
       })}
@@ -153,7 +157,7 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
           <BlockButton key={block.type} type={block.type} icon={block.icon} />
         )
       })}
-
+      </Box>
       <Box>
         <SearchOutlined className="p-2 align-self-center" />
         <input
@@ -179,8 +183,14 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
           }}>
           <DownOutlined />
         </Button>
-        <Button variant="primary" disabled={!isSaveActive}>
-          save
+        <Button variant="primary" onClick={downloadAsDoc}>
+          <FileWordOutlined /> 
+        {' '}
+          <span style={{
+                verticalAlign: 'text-top'
+          }}>
+          save as doc  
+            </span>
         </Button>
       </Box>
     </Flex>

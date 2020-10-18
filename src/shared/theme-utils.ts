@@ -1,7 +1,7 @@
 import { Styled } from 'theme-ui'
 const colors = {
   text: '#000',
-  background: '#fff',
+  background: '#f0efef',
   primary: '#000',
   secondary: '#3f3f3f',
   muted: '#e0e0e0',
@@ -31,9 +31,9 @@ const fonts = {
 const fontSizes = [12, 14, 16, 20, 24, 32, 48, 64, 72]
 
 const fontWeights = {
-  body: 400,
+  body: 200,
   heading: 700,
-  display: 900
+  display: 100
 }
 
 const lineHeights = {
@@ -72,7 +72,8 @@ const theme = {
     root: {
       fontFamily: 'body',
       lineHeight: 'body',
-      fontWeight: 'body'
+      fontWeight: 'body',
+      overflowX:'hidden'
     },
     h1: {
       variant: 'textStyles.display'
@@ -165,13 +166,13 @@ const theme = {
       borderColor: 'text'
     },
     strong: {
-      fontWeight: 'bolder'
+      fontWeight: '900'
     }
   },
-  buttons: {
-    primary: {
-      bg: 'primary',
-      'margin-right': '10px'
+  "buttons":{
+    "primary":{
+      "bg":"primary",
+      "margin-right":'10px'
     }
   }
 }

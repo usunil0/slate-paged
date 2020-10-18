@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react'
 
-import { Button } from 'theme-ui'
+import { Button,ButtonProps } from 'theme-ui'
 import { useSlate } from 'slate-react'
 
 import toggleMark, { isMarkActive } from '../utils/toggle-mark'
@@ -10,7 +10,7 @@ interface MarkButtonProps extends JSX.IntrinsicAttributes {
   icon: React.ReactElement
 }
 
-const MarkButton = ({ type, icon }: MarkButtonProps) => {
+const MarkButton = ({ type, icon }:MarkButtonProps) => {
   const editor = useSlate()
 
   return (
