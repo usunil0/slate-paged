@@ -1,3 +1,4 @@
+
 import { OrderedListOutlined, UnorderedListOutlined } from '@ant-design/icons'
 import { CSSProperties } from 'react'
 import { RenderElementProps } from 'slate-react'
@@ -59,7 +60,29 @@ const blocks: ToolbarBlockProps[] = [
     renderBlock: (props: RenderElementProps) => (
       <ul {...props.attributes}>{props.children}</ul>
     )
-  }
+  },
+  {
+    type: 'page',
+    title: 'Page',
+    icon:<>p</> ,
+    isHiddenInToolbar: true,
+    renderBlock: ({ attributes, children }: RenderElementProps) => (
+     <div className="page" {...attributes}  style={{
+      position: 'relative',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      marginTop: '40px',
+      marginBottom: '40px',
+      width: '816px',
+      height: '1056px',
+      padding: '60px',
+      background:'#fff',
+
+     }}>
+        {children}
+     </div>
+    )
+  },
 ]
 
 export default blocks

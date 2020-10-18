@@ -1,7 +1,7 @@
-import React, { useMemo, useState, useCallback, useEffect } from 'react'
+import React, { useMemo, useState, useCallback, useEffect} from 'react'
 
 // Import the Slate editor factory.
-import { createEditor, Node, Text, NodeEntry, Range } from 'slate'
+import { createEditor, Node, Text, NodeEntry, Range, Transforms } from 'slate'
 import {
   Slate,
   Editable,
@@ -51,7 +51,6 @@ function TextEditor() {
 
   const handleDecorate = ([node, path]: NodeEntry<Node>) => {
     const ranges: Range[] = []
-
     if (state.search && Text.isText(node)) {
       const currentRanges = getTextRanges(node, path, state.search)
       const rangesWithHighlights: Range[] = []
@@ -64,19 +63,6 @@ function TextEditor() {
       })
       ranges.push(...rangesWithHighlights)
     }
-    if (Text.isText(node)) {
-      const currentRanges = getTextRanges(node, path, '___')
-      const rangesWithHighlights: Range[] = []
-      currentRanges.forEach((text: Range) => {
-        rangesWithHighlights.push({
-          ...text,
-          highlight: true,
-          highlightColor: highlightColors.mandatoryReplaceColor
-        })
-      })
-      ranges.push(...rangesWithHighlights)
-    }
-
     return ranges
   }
 
@@ -93,53 +79,61 @@ function TextEditor() {
     ReactEditor.focus(editor)
   }, [])
 
+  const handleOnPaste=(e:React.ClipboardEvent<HTMLDivElement>)=>{
+    e.preventDefault()
+    const text= e.clipboardData?.getData('text')
+    console.log(text,'YES, this text was pasted but i need to insert the page break so i disabled it for now, WORK IN PROGRESS')
+    // if(text){
+    //   Transforms.insertText(editor,text)
+    // }
+  }
+
   return (
-   <div>
-       <Slate
-          editor={editor}
-          value={state.value}
-          onChange={value => setState({ ...state, value })}>
-          <BalloonToolbar>
-            {toolbarMarks.map((mark: IToolbarMark) => {
-              return (
-                <ToolbarMark
-                  type={mark.type}
-                  icon={mark.icon}
-                  onMouseDown={e => {
-                    e.preventDefault()
-                    toggleMark(editor, mark.type)
-                  }}
-                />
-              )
-            })}
-          </BalloonToolbar>
-          <div className="row">
-            <div className="col-md-12">
-              <Toolbar
-                setSearch={(value: string) =>
-                  setState({ ...state, search: value })
-                }
-                search={state.search || ''}
-                lastBlurSelection={state.lastBlurSelection}
+    <div>
+      <Slate
+        editor={editor}
+        value={state.value}
+        onChange={value => setState({ ...state, value })}>
+        <BalloonToolbar>
+          {toolbarMarks.map((mark: IToolbarMark) => {
+            return (
+              <ToolbarMark
+                type={mark.type}
+                icon={mark.icon}
+                onMouseDown={e => {
+                  e.preventDefault()
+                  toggleMark(editor, mark.type)
+                }}
               />
-              <Editable
-                decorate={decorate}
-                onKeyDown={(event: any) => onKeyDownCustom(editor, event)}
-                renderElement={renderElement}
-                renderLeaf={handleRenderLeaf}
-                onBlur={() =>
-                  setState({ ...state, lastBlurSelection: editor.selection })
-                }
-              />
-            </div>
-            {/* <div className="col-md-6">
+            )
+          })}
+        </BalloonToolbar>
+        <div className="row">
+          <div className="col-md-12">
+            <Toolbar
+              setSearch={(value: string) =>
+                setState({ ...state, search: value })
+              }
+              search={state.search || ''}
+              lastBlurSelection={state.lastBlurSelection}
+            />
+            <Editable
+              onPaste={handleOnPaste}
+              decorate={decorate}
+              onKeyDown={(event: any) => onKeyDownCustom(editor, event)}
+              renderElement={renderElement}
+              renderLeaf={handleRenderLeaf}
+              onBlur={() =>
+                setState({ ...state, lastBlurSelection: editor.selection })
+              }
+            />
+          </div>
+          {/* <div className="col-md-6">
                <DebugTabs />
             </div> */}
-          </div>
-        </Slate>
-    
-   </div>
-  
+        </div>
+      </Slate>
+    </div>
   )
 }
 

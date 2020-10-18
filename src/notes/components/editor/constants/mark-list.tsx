@@ -7,6 +7,7 @@ import {
 } from '@ant-design/icons'
 import { CSSProperties } from 'react'
 import highlightColors from './highlight-colors'
+import { Styled } from 'theme-ui'
 
 export interface IToolbarMark {
   type: string
@@ -39,7 +40,7 @@ const toolbarMarks: IToolbarMark[] = [
     type: 'bold',
     title: 'BOLD',
     icon: <BoldOutlined />,
-    renderChildren: (children: any) => <strong>{children}</strong>
+    renderChildren: (children: any) => <Styled.strong>{children}</Styled.strong>
   },
   {
     type: 'italics',
@@ -64,14 +65,14 @@ const toolbarMarks: IToolbarMark[] = [
     title: 'highlight',
     icon: <HighlightOutlined />,
     renderChildren: (children: any, leaf: any) => (
-      <span
+      <Styled.strong
         style={{
           backgroundColor: leaf?.highlightColor
             ? leaf.highlightColor
             : highlightColors.searchHighlightColor
         }}>
         {children}
-      </span>
+      </Styled.strong>
     )
   }
 ]

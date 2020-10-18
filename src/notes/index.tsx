@@ -2,14 +2,16 @@ import React from 'react'
 
 import dynamic from 'next/dynamic'
 
-const TextEditor = dynamic(() => import('./components/editor/text-editor') as any, {
-  ssr: false
-})
+const TextEditor = dynamic(
+  () => import('./components/editor/text-editor') as any,
+  {
+    ssr: false
+  }
+)
 
 const Notes = () => {
   return (
     <div>
-      Notes
       <TextEditor />
     </div>
   )

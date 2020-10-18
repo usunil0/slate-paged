@@ -15,8 +15,9 @@ const BlockButton = ({ type, icon }: BlockButtonProps) => {
 
   return (
     <Button
-      className={`d-inline m-1 ${isBlockActive(editor, type) ? 'primary' : 'default'}`}
-      onMouseDown={(event:any) => {
+      className={`d-inline m-1`}
+      variant={`${isBlockActive(editor, type) ? 'primary' : 'secondary'}`}
+      onMouseDown={(event: any) => {
         event.preventDefault()
         toggleBlock(editor, type)
       }}>

@@ -1,20 +1,25 @@
+/** @jsx jsx */
+import { jsx } from 'theme-ui'
+
 import React, { useEffect, useState } from 'react'
+import {saveAs} from 'file-saver'
+import { Button, Flex, Box } from 'theme-ui'
+import { DownOutlined, FileWordOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons'
+import { ReactEditor, useSlate } from 'slate-react'
+import { Range, Transforms } from 'slate'
 
 import toolbarMarks, { IToolbarMark } from '../constants/mark-list'
 import blocks, { ToolbarBlockProps } from '../constants/block-list'
 import MarkButton from './mark-button'
 import BlockButton from './block-button'
-import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons'
-import { ReactEditor, useSlate } from 'slate-react'
-import { Range, Transforms } from 'slate'
 import indexOf from '../utils/index-of-range'
 import {
   getNextClosestRange,
   getPreviousClosestRange
 } from '../utils/get-closest-range'
 import defaultSelection from '../utils/default-selection'
-import { Button } from 'theme-ui'
 import { getEditorTextRanges } from '../utils/get-text-ranges'
+import convertToDoc from '../utils/convert-to-doc'
 
 interface ToolbarProps {
   search: string
@@ -26,7 +31,6 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
   const [Ranges, setRanges] = useState<Range[]>([])
   const [isPreviousActive, setIsPreviousActive] = useState<boolean>(false)
   const [isNextActive, setisNextActive] = useState<boolean>(false)
-  const [isSaveActive, setSaveActive] = useState<boolean>(false)
 
   useEffect(() => {
     if (search) {
@@ -130,24 +134,31 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
     }
   }, [search, Ranges, editor.selection])
 
-  useEffect(() => {
-    const textRanges = getEditorTextRanges(editor, '___')
-    if (textRanges.length > 0) {
-      setSaveActive(false)
-    } else {
-      setSaveActive(true)
-    }
-  }, [editor.selection, editor.children])
+  const downloadAsDoc =async ()=>{
+  const doc=await convertToDoc(editor)
+   saveAs(doc,"YO THIS IS YOUR FILE.docx")
+  }
+
   return (
-    <div>
+    <Flex sx={{
+      width:'100%',
+      position:'sticky',
+      top:0,
+      zIndex:10,
+      bg:'primary'
+    }}>
+      <Box>
       {toolbarMarks.map((mark: IToolbarMark) => {
         return <MarkButton type={mark.type} icon={mark.icon} />
       })}
       {blocks.map((block: ToolbarBlockProps) => {
         if (block.isHiddenInToolbar) return
-        return <BlockButton key={block.type} type={block.type} icon={block.icon} />
+        return (
+          <BlockButton key={block.type} type={block.type} icon={block.icon} />
+        )
       })}
-      <div className="d-inline-flex border">
+      </Box>
+      <Box>
         <SearchOutlined className="p-2 align-self-center" />
         <input
           type="search"
@@ -155,27 +166,34 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
           onChange={e => setSearch(e.target.value)}
           className="d-inline-block border-0"
         />
-        <div>
-          <Button
-            disabled={!isPreviousActive}
-            onMouseDown={e => {
-              e.preventDefault()
-              goToPrevious()
-            }}>
-            <UpOutlined />
-          </Button>
-          <Button
-            disabled={!isNextActive}
-            onMouseDown={e => {
-              e.preventDefault()
-              goToNext()
-            }}>
-            <DownOutlined />
-          </Button>
-        </div>
-        <Button disabled={!isSaveActive}>save</Button>
-      </div>
-    </div>
+        <Button
+          disabled={!isPreviousActive}
+          onMouseDown={e => {
+            e.preventDefault()
+            goToPrevious()
+          }}>
+          <UpOutlined />
+        </Button>
+        <Button
+          variant="primary"
+          disabled={!isNextActive}
+          onMouseDown={e => {
+            e.preventDefault()
+            goToNext()
+          }}>
+          <DownOutlined />
+        </Button>
+        <Button variant="primary" onClick={downloadAsDoc}>
+          <FileWordOutlined /> 
+        {' '}
+          <span style={{
+                verticalAlign: 'text-top'
+          }}>
+          save as doc  
+            </span>
+        </Button>
+      </Box>
+    </Flex>
   )
 }
 
