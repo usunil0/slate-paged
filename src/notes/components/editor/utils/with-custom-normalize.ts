@@ -6,7 +6,7 @@ import toggleBlock from './toggle-block'
 const emptyPage ={type:'page',children:[{type:'paragraph',children:[{type:'text',text:''}]}]}
 
 function withCustomNormalize(editor: ReactEditor) {
-  // can include custom normalisations--- for now returning the same the editor
+  // can include custom normalisations--- 
  const {normalizeNode}=editor
  editor.normalizeNode = entry => {
 
