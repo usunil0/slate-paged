@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
+    "@theme-ui/typography": "^0.3.0",
     "bootstrap": "^4.5.3",
     "is-hotkey": "^0.1.6",
     "next": "9.5.5",

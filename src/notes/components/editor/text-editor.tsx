@@ -94,52 +94,50 @@ function TextEditor() {
   }, [])
 
   return (
-   <div>
-       <Slate
-          editor={editor}
-          value={state.value}
-          onChange={value => setState({ ...state, value })}>
-          <BalloonToolbar>
-            {toolbarMarks.map((mark: IToolbarMark) => {
-              return (
-                <ToolbarMark
-                  type={mark.type}
-                  icon={mark.icon}
-                  onMouseDown={e => {
-                    e.preventDefault()
-                    toggleMark(editor, mark.type)
-                  }}
-                />
-              )
-            })}
-          </BalloonToolbar>
-          <div className="row">
-            <div className="col-md-12">
-              <Toolbar
-                setSearch={(value: string) =>
-                  setState({ ...state, search: value })
-                }
-                search={state.search || ''}
-                lastBlurSelection={state.lastBlurSelection}
+    <div>
+      <Slate
+        editor={editor}
+        value={state.value}
+        onChange={value => setState({ ...state, value })}>
+        <BalloonToolbar>
+          {toolbarMarks.map((mark: IToolbarMark) => {
+            return (
+              <ToolbarMark
+                type={mark.type}
+                icon={mark.icon}
+                onMouseDown={e => {
+                  e.preventDefault()
+                  toggleMark(editor, mark.type)
+                }}
               />
-              <Editable
-                decorate={decorate}
-                onKeyDown={(event: any) => onKeyDownCustom(editor, event)}
-                renderElement={renderElement}
-                renderLeaf={handleRenderLeaf}
-                onBlur={() =>
-                  setState({ ...state, lastBlurSelection: editor.selection })
-                }
-              />
-            </div>
-            {/* <div className="col-md-6">
+            )
+          })}
+        </BalloonToolbar>
+        <div className="row">
+          <div className="col-md-12">
+            <Toolbar
+              setSearch={(value: string) =>
+                setState({ ...state, search: value })
+              }
+              search={state.search || ''}
+              lastBlurSelection={state.lastBlurSelection}
+            />
+            <Editable
+              decorate={decorate}
+              onKeyDown={(event: any) => onKeyDownCustom(editor, event)}
+              renderElement={renderElement}
+              renderLeaf={handleRenderLeaf}
+              onBlur={() =>
+                setState({ ...state, lastBlurSelection: editor.selection })
+              }
+            />
+          </div>
+          {/* <div className="col-md-6">
                <DebugTabs />
             </div> */}
-          </div>
-        </Slate>
-    
-   </div>
-  
+        </div>
+      </Slate>
+    </div>
   )
 }
 

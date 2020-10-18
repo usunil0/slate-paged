@@ -10,13 +10,13 @@ interface MarkButtonProps extends JSX.IntrinsicAttributes {
   icon: React.ReactElement
 }
 
-const MarkButton = ({ type, icon }: MarkButtonProps)=> {
+const MarkButton = ({ type, icon }: MarkButtonProps) => {
   const editor = useSlate()
 
   return (
     <Button
       className={`d-inline m-1`}
-     onMouseDown={(event:any) => {
+      onMouseDown={(event: any) => {
         event.preventDefault()
         toggleMark(editor, type)
       }}>

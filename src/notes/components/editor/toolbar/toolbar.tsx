@@ -1,19 +1,23 @@
+/** @jsx jsx */
+import { jsx } from 'theme-ui'
+
 import React, { useEffect, useState } from 'react'
+
+import { Button, Flex, Box } from 'theme-ui'
+import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons'
+import { ReactEditor, useSlate } from 'slate-react'
+import { Range, Transforms } from 'slate'
 
 import toolbarMarks, { IToolbarMark } from '../constants/mark-list'
 import blocks, { ToolbarBlockProps } from '../constants/block-list'
 import MarkButton from './mark-button'
 import BlockButton from './block-button'
-import { DownOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons'
-import { ReactEditor, useSlate } from 'slate-react'
-import { Range, Transforms } from 'slate'
 import indexOf from '../utils/index-of-range'
 import {
   getNextClosestRange,
   getPreviousClosestRange
 } from '../utils/get-closest-range'
 import defaultSelection from '../utils/default-selection'
-import { Button } from 'theme-ui'
 import { getEditorTextRanges } from '../utils/get-text-ranges'
 
 interface ToolbarProps {
@@ -139,15 +143,18 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
     }
   }, [editor.selection, editor.children])
   return (
-    <div>
+    <Flex>
       {toolbarMarks.map((mark: IToolbarMark) => {
         return <MarkButton type={mark.type} icon={mark.icon} />
       })}
       {blocks.map((block: ToolbarBlockProps) => {
         if (block.isHiddenInToolbar) return
-        return <BlockButton key={block.type} type={block.type} icon={block.icon} />
+        return (
+          <BlockButton key={block.type} type={block.type} icon={block.icon} />
+        )
       })}
-      <div className="d-inline-flex border">
+
+      <Box>
         <SearchOutlined className="p-2 align-self-center" />
         <input
           type="search"
@@ -155,27 +162,28 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
           onChange={e => setSearch(e.target.value)}
           className="d-inline-block border-0"
         />
-        <div>
-          <Button
-            disabled={!isPreviousActive}
-            onMouseDown={e => {
-              e.preventDefault()
-              goToPrevious()
-            }}>
-            <UpOutlined />
-          </Button>
-          <Button
-            disabled={!isNextActive}
-            onMouseDown={e => {
-              e.preventDefault()
-              goToNext()
-            }}>
-            <DownOutlined />
-          </Button>
-        </div>
-        <Button disabled={!isSaveActive}>save</Button>
-      </div>
-    </div>
+        <Button
+          disabled={!isPreviousActive}
+          onMouseDown={e => {
+            e.preventDefault()
+            goToPrevious()
+          }}>
+          <UpOutlined />
+        </Button>
+        <Button
+          variant="primary"
+          disabled={!isNextActive}
+          onMouseDown={e => {
+            e.preventDefault()
+            goToNext()
+          }}>
+          <DownOutlined />
+        </Button>
+        <Button variant="primary" disabled={!isSaveActive}>
+          save
+        </Button>
+      </Box>
+    </Flex>
   )
 }
 
