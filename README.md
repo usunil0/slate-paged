@@ -2,6 +2,10 @@
 
 A try to make slate js paged.
 
+demo : https://slate-paged-demo.vercel.app
+
+
+
 slate:
 https://github.com/ianstormtaylor/slate
 
