@@ -16,7 +16,7 @@ basic functionalities
 figure out the nodes length and paging
 
 TODO:
-testing and yea the page is breaking is some conditions need to figure out
+testing and yea the page is breaking in some conditions need to figure out
 
 ## Getting Started
 after `yarn dev` visit http://localhost:3000 for notes
