@@ -1,10 +1,10 @@
 /** @jsx jsx */
-import { jsx } from 'theme-ui'
+import { jsx, Link } from 'theme-ui'
 
 import React, { useEffect, useState } from 'react'
 import {saveAs} from 'file-saver'
 import { Button, Flex, Box } from 'theme-ui'
-import { DownOutlined, FileWordOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons'
+import { DownOutlined, FileWordOutlined, GithubOutlined, SearchOutlined, UpOutlined } from '@ant-design/icons'
 import { ReactEditor, useSlate } from 'slate-react'
 import { Range, Transforms } from 'slate'
 
@@ -147,7 +147,11 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
       zIndex:10,
       bg:'primary'
     }}>
-      <Box>
+      <Box
+      sx={{
+        flex:'1 1 auto'
+      }}
+      >
       {toolbarMarks.map((mark: IToolbarMark) => {
         return <MarkButton type={mark.type} icon={mark.icon} />
       })}
@@ -192,6 +196,13 @@ const Toolbar = ({ setSearch, search, lastBlurSelection }: ToolbarProps) => {
           save as doc  
             </span>
         </Button>
+      </Box>
+      <Box>
+      <a href="https://github.com/usunil0/slate-paged" target="_blank">
+        <Button variant="primary" >
+          <GithubOutlined/>
+        </Button>
+      </a>
       </Box>
     </Flex>
   )
