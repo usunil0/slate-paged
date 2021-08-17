@@ -12,11 +12,6 @@ function withCustomNormalize(editor: ReactEditor) {
   const { normalizeNode } = editor
   editor.normalizeNode = entry => {
     const [node, path] = entry
-    let start: null | Path = null
-    const { selection } = editor
-    if (selection && Range.isCollapsed(selection)) {
-      start = selection.anchor.path
-    }
     if (Text.isText(node)) return normalizeNode(entry)
 
     // if the node is Page
